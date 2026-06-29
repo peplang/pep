@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Guia completo da linguagem PEP — Programar em Português">
+  <title>PEP — Guia da linguagem</title>
+  <style>
+    :root{--bg:#f6f5ef;--paper:#fffefa;--ink:#17211e;--muted:#60706a;--line:#d9e0db;--green:#087f5b;--dark:#102e26;--gold:#e9b949;--code:#172521;--radius:14px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:#096348}.layout{display:grid;grid-template-columns:280px minmax(0,1fr)}aside{position:sticky;top:0;height:100vh;padding:27px 20px;overflow:auto;background:var(--dark);color:#d9e9e2}.logo{display:flex;align-items:center;gap:12px;color:white;text-decoration:none;font-size:1.3rem;font-weight:850}.logo b{display:grid;place-items:center;width:40px;height:40px;border-radius:11px;background:var(--gold);color:var(--dark)}.version{margin:4px 0 20px 52px;color:#91ada2;font-size:.76rem}.search{width:100%;padding:10px 12px;border:1px solid #3d5b52;border-radius:8px;background:#173a31;color:white;outline:none}.search:focus{border-color:var(--gold)}.nav-title{margin:20px 9px 7px;color:#78998d;font-size:.68rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}nav a{display:block;padding:6px 9px;border-radius:7px;color:#c9ded6;text-decoration:none;font-size:.89rem}nav a:hover,nav a.active{background:#1d493d;color:white}.menu{display:none}
+    main{min-width:0}.hero{padding:75px clamp(25px,7vw,100px) 65px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#e1f3e9,#f6f5ef 70%)}.eyebrow{color:var(--green);font-size:.78rem;font-weight:850;letter-spacing:.13em;text-transform:uppercase}.hero h1{max-width:900px;margin:10px 0 20px;font-size:clamp(2.7rem,6vw,5.2rem);line-height:1;letter-spacing:-.055em}.hero h1 span{color:var(--green)}.lead{max-width:750px;color:#4e5e58;font-size:1.18rem}.actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:29px}.button{padding:11px 18px;border-radius:9px;background:var(--green);color:white;text-decoration:none;font-weight:750}.button.alt{border:1px solid #b6c7bf;background:transparent;color:var(--ink)}
+    .content{max-width:1050px;margin:auto;padding:25px clamp(20px,5vw,70px) 95px}.chapter{padding-top:52px}.chapter>h2{margin:0 0 10px;font-size:clamp(1.8rem,4vw,2.65rem);line-height:1.15;letter-spacing:-.035em}.chapter>h2 i{color:var(--green);font-size:.68em;font-style:normal}.chapter h3{margin-top:34px;font-size:1.28rem}.intro{max-width:800px;color:var(--muted);font-size:1.04rem}.grid,.api{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin:20px 0}.card{padding:18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--paper)}.card h3,.card h4{margin-top:0}.callout{margin:22px 0;padding:15px 18px;border-left:4px solid var(--gold);border-radius:0 9px 9px 0;background:#fff7da}.callout.info{border-color:var(--green);background:#e7f5ee}
+    pre{position:relative;margin:18px 0;padding:20px;overflow:auto;border-radius:12px;background:var(--code);color:#e9f3ee;box-shadow:0 12px 30px #183d3020;font:14px/1.6 "Cascadia Code",Consolas,monospace;tab-size:4}code{font-family:"Cascadia Code",Consolas,monospace}p code,li code,td code,.sig code{padding:2px 5px;border-radius:5px;background:#e6ebe7;color:#17513f;font-size:.88em}.copy{position:absolute;top:9px;right:9px;padding:5px 8px;border:1px solid #4d675e;border-radius:6px;background:#263e37;color:#d7e7e0;cursor:pointer;font-size:.7rem}.kw{color:#ffcb6b}.str{color:#c3e88d}.num{color:#f78c6c}.com{color:#7f9c92}.fn{color:#82aaff}
+    table{width:100%;margin:18px 0;border-collapse:collapse;background:var(--paper);font-size:.92rem}th,td{padding:11px 13px;border:1px solid var(--line);text-align:left;vertical-align:top}th{background:#ebf0ec;font-size:.78rem;letter-spacing:.04em;text-transform:uppercase}.table-wrap{overflow:auto}.api .card{box-shadow:none}.api h4{margin-bottom:8px;color:#096348}.sig{color:#3b4944;font-size:.87rem;line-height:1.85}.hidden{display:none!important}.footer{padding:30px;border-top:1px solid var(--line);color:var(--muted);text-align:center}
+    @media(max-width:850px){.layout{display:block}aside{position:fixed;z-index:20;left:-290px;width:280px;transition:left .2s}aside.open{left:0}.menu{display:block;position:fixed;z-index:30;right:16px;bottom:16px;width:49px;height:49px;border:0;border-radius:50%;background:var(--green);color:white;box-shadow:0 6px 25px #0004;font-size:1.25rem}.grid,.api{grid-template-columns:1fr}.hero{padding-top:50px}}@media(max-width:520px){.content{padding-inline:16px}.hero h1{font-size:2.7rem}pre{margin-inline:-5px;padding:17px;font-size:12.5px}th,td{padding:9px}}
+  </style>
+</head>
+<body>
+<button class="menu" aria-label="Abrir menu">☰</button>
+<div class="layout">
+<aside>
+  <a class="logo" href="#inicio"><b>P</b> PEP</a><div class="version">Programar em Português · v0.6.0</div>
+  <input id="search" class="search" type="search" placeholder="Buscar na documentação…" aria-label="Buscar">
+  <nav>
+    <div class="nav-title">Comece aqui</div>
+    <a href="#instalacao">Instalação</a><a href="#primeiro">Primeiro programa</a><a href="#fundamentos">Fundamentos</a>
+    <div class="nav-title">A linguagem</div>
+    <a href="#controle">Controle de fluxo</a><a href="#funcoes">Funções</a><a href="#colecoes">Listas e mapas</a><a href="#erros">Erros</a><a href="#modulos">Módulos</a>
+    <div class="nav-title">Aplicações</div>
+    <a href="#arquivos">Arquivos, JSON e CSV</a><a href="#web">Web e templates</a><a href="#websocket">WebSocket</a><a href="#bancos">Bancos de dados</a><a href="#numerico">Vetores e tensores</a><a href="#bytes">Bytes e mmap</a><a href="#ia">IA e autodiff</a>
+    <div class="nav-title">Consulta</div>
+    <a href="#referencia">Funções nativas</a><a href="#cli">Linha de comando</a><a href="#praticas">Boas práticas</a>
+  </nav>
+</aside>
+<main>
+<header class="hero" id="inicio">
+  <div class="eyebrow">Guia completo da linguagem</div>
+  <h1>Programe com clareza. <span>Em português.</span></h1>
+  <p class="lead">PEP é uma linguagem interpretada, dinâmica e escrita em Rust. Aprenda do primeiro arquivo até templates web, WebSocket em tempo real, bancos de dados, tensores, autodiff e processamento binário.</p>
+  <div class="actions"><a class="button" href="#primeiro">Começar a aprender</a><a class="button alt" href="#referencia">Consultar API</a></div>
+</header>
+<div class="content">
+
+<section class="chapter" id="instalacao" data-keywords="instalar compilar cargo rust windows repl">
+  <h2><i>01.</i> Instalação e execução</h2>
+  <p class="intro">O repositório contém o interpretador e suas dependências. Instale Rust/Cargo e compile na raiz do projeto.</p>
+  <pre><code>cargo build --release</code></pre>
+  <p>No Windows, o executável será <code>target\release\pep.exe</code>. Confira e execute:</p>
+  <pre><code>target\release\pep.exe --versao
+target\release\pep.exe exemplos\ola_mundo.pep
+target\release\pep.exe</code></pre>
+  <p>O último comando abre o REPL. Nele, use <code>ajuda</code> e <code>sair</code>. Nos próximos exemplos usamos apenas <code>pep</code>; coloque o executável no PATH ou use seu caminho completo.</p>
+</section>
+
+<section class="chapter" id="primeiro" data-keywords="olá mundo imprimir comentário arquivo">
+  <h2><i>02.</i> Primeiro programa</h2>
+  <p>Crie um arquivo <code>ola.pep</code>:</p>
+  <pre><code><span class="com"># Comentários começam com cerquilha</span>
+<span class="kw">var</span> nome = <span class="str">"Mundo"</span>
+<span class="fn">imprimir</span>(<span class="str">"Olá, {nome}!"</span>)</code></pre>
+  <pre><code>pep ola.pep
+<span class="com"># Olá, Mundo!</span></code></pre>
+  <p>Uma nova linha encerra a instrução. Ponto e vírgula também é aceito, mas geralmente é desnecessário. Blocos usam chaves.</p>
+</section>
+
+<section class="chapter" id="fundamentos" data-keywords="tipos valores variáveis operadores texto interpolação nulo hexadecimal">
+  <h2><i>03.</i> Fundamentos</h2>
+  <h3>Tipos de valor</h3>
+  <div class="table-wrap"><table><thead><tr><th>Tipo</th><th>Exemplo</th><th>Uso</th></tr></thead><tbody>
+    <tr><td>inteiro</td><td><code>42</code>, <code>0xFF</code></td><td>Inteiro de 64 bits; aceita hexadecimal.</td></tr>
+    <tr><td>decimal</td><td><code>3.14</code></td><td>Ponto flutuante.</td></tr>
+    <tr><td>texto</td><td><code>"PEP"</code>, <code>'PEP'</code></td><td>Aspas simples ou duplas.</td></tr>
+    <tr><td>booleano</td><td><code>verdadeiro</code>, <code>falso</code></td><td>Decisões lógicas.</td></tr>
+    <tr><td>nulo</td><td><code>nulo</code></td><td>Ausência de valor.</td></tr>
+    <tr><td>lista</td><td><code>[1, 2, 3]</code></td><td>Coleção ordenada, índice começa em zero.</td></tr>
+    <tr><td>mapa</td><td><code>{nome: "Ana"}</code></td><td>Pares de chave e valor.</td></tr>
+    <tr><td>especializados</td><td>função, erro, bytes, tensor, conexão</td><td>Criados pelas APIs da linguagem.</td></tr>
+  </tbody></table></div>
+  <pre><code><span class="kw">var</span> linguagem = <span class="str">"PEP"</span>
+<span class="kw">var</span> versao = <span class="num">0.6</span>
+versao += <span class="num">0.1</span>
+<span class="fn">imprimir</span>(<span class="fn">tipo</span>(linguagem), versao)</code></pre>
+  <h3>Textos e interpolação</h3>
+  <div class="grid">
+    <div class="card"><h4>Expressões em chaves</h4><pre><code><span class="kw">var</span> preco = <span class="num">12.5</span>
+<span class="fn">imprimir</span>(<span class="str">"Total: {preco * 2}"</span>)</code></pre></div>
+    <div class="card"><h4>Texto multilinha</h4><pre><code><span class="kw">var</span> sql = <span class="str">"""
+    SELECT nome
+    FROM pessoas
+"""</span></code></pre></div>
+  </div>
+  <p>Use <code>{{</code> e <code>}}</code> para chaves literais. Escapes incluem <code>\n</code>, <code>\t</code>, <code>\\</code> e <code>\"</code>.</p>
+  <h3>Operadores</h3>
+  <div class="table-wrap"><table><tbody>
+    <tr><th>Aritmética</th><td><code>+ - * / // %</code> — <code>//</code> é divisão inteira.</td></tr>
+    <tr><th>Comparação</th><td><code>== != &lt; &gt; &lt;= &gt;=</code></td></tr>
+    <tr><th>Lógica</th><td><code>nao</code>, <code>e</code>, <code>ou</code></td></tr>
+    <tr><th>Pertencimento</th><td><code>em</code>, <code>nao em</code></td></tr>
+    <tr><th>Atribuição</th><td><code>= += -= *= /= %=</code></td></tr>
+    <tr><th>Nulos</th><td><code>a ?? alternativa</code>, <code>obj?.campo</code></td></tr>
+  </tbody></table></div>
+  <pre><code><span class="kw">var</span> perfil = <span class="kw">nulo</span>
+<span class="kw">var</span> cidade = perfil?.cidade ?? <span class="str">"não informada"</span></code></pre>
+  <div class="callout"><strong>Valores falsos:</strong> <code>falso</code>, <code>nulo</code>, zero e textos/listas/mapas/bytes vazios. Os demais valores são verdadeiros.</div>
+</section>
+
+<section class="chapter" id="controle" data-keywords="se senao enquanto para escolher caso pare continue repetição">
+  <h2><i>04.</i> Controle de fluxo</h2>
+  <div class="grid">
+    <div class="card"><h3>Condição</h3><pre><code><span class="kw">se</span> nota &gt;= <span class="num">7</span> {
+    <span class="fn">imprimir</span>(<span class="str">"Aprovado"</span>)
+} <span class="kw">senao se</span> nota &gt;= <span class="num">5</span> {
+    <span class="fn">imprimir</span>(<span class="str">"Recuperação"</span>)
+} <span class="kw">senao</span> {
+    <span class="fn">imprimir</span>(<span class="str">"Reprovado"</span>)
+}</code></pre></div>
+    <div class="card"><h3>Escolha</h3><pre><code><span class="kw">escolher</span> codigo {
+    <span class="kw">caso</span> <span class="num">200</span> { <span class="fn">imprimir</span>(<span class="str">"OK"</span>) }
+    <span class="kw">caso</span> <span class="num">401</span>, <span class="num">403</span> { <span class="fn">imprimir</span>(<span class="str">"Negado"</span>) }
+    <span class="kw">padrao</span> { <span class="fn">imprimir</span>(<span class="str">"Outro"</span>) }
+}</code></pre></div>
+  </div>
+  <pre><code><span class="kw">para</span> nome <span class="kw">em</span> [<span class="str">"Ana"</span>, <span class="str">"Bia"</span>] { <span class="fn">imprimir</span>(nome) }
+
+<span class="com"># fim inclusivo: 1, 3, 5</span>
+<span class="kw">para</span> i <span class="kw">de</span> <span class="num">1</span> <span class="kw">ate</span> <span class="num">5</span> <span class="kw">passo</span> <span class="num">2</span> { <span class="fn">imprimir</span>(i) }
+
+<span class="kw">enquanto</span> contador &gt; <span class="num">0</span> {
+    contador -= <span class="num">1</span>
+    <span class="kw">se</span> contador == <span class="num">2</span> { <span class="kw">continue</span> }
+    <span class="kw">se</span> contador == <span class="num">0</span> { <span class="kw">pare</span> }
+}</code></pre>
+  <div class="callout info"><code>intervalo(1, 5)</code> termina antes do 5. Já <code>para i de 1 ate 5</code> inclui o 5.</div>
+</section>
+
+<section class="chapter" id="funcoes" data-keywords="função closure lambda seta parâmetro padrão variádico retorno">
+  <h2><i>05.</i> Funções e closures</h2>
+  <pre><code><span class="kw">funcao</span> <span class="fn">saudar</span>(nome, prefixo = <span class="str">"Olá"</span>) {
+    <span class="kw">retornar</span> <span class="str">"{prefixo}, {nome}!"</span>
+}
+
+<span class="kw">funcao</span> <span class="fn">somar_todos</span>(...numeros) {
+    <span class="kw">retornar</span> <span class="fn">reduzir</span>(numeros, (total, n) =&gt; total + n, <span class="num">0</span>)
+}</code></pre>
+  <div class="grid">
+    <div class="card"><h4>Função anônima</h4><pre><code><span class="kw">var</span> dobro = <span class="kw">funcao</span>(n) {
+    <span class="kw">retornar</span> n * <span class="num">2</span>
+}</code></pre></div>
+    <div class="card"><h4>Função seta</h4><pre><code><span class="kw">var</span> dobro = n =&gt; n * <span class="num">2</span>
+<span class="kw">var</span> somar = (a, b) =&gt; a + b</code></pre></div>
+  </div>
+  <p>Funções são valores e closures capturam o ambiente de definição. Parâmetros padrão são opcionais; o parâmetro <code>...restante</code> deve ser o último.</p>
+</section>
+
+<section class="chapter" id="colecoes" data-keywords="lista mapa dicionário mapear filtrar reduzir índice ponto">
+  <h2><i>06.</i> Listas e mapas</h2>
+  <pre><code><span class="kw">var</span> numeros = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>]
+numeros[<span class="num">0</span>] = <span class="num">10</span>
+<span class="kw">var</span> pares = <span class="fn">filtrar</span>(numeros, n =&gt; n % <span class="num">2</span> == <span class="num">0</span>)
+<span class="kw">var</span> quadrados = <span class="fn">mapear</span>(pares, n =&gt; n * n)
+
+<span class="kw">var</span> pessoa = {nome: <span class="str">"Ana"</span>, endereco: {cidade: <span class="str">"Recife"</span>}}
+pessoa.idade = <span class="num">28</span>
+<span class="fn">imprimir</span>(pessoa.nome, pessoa[<span class="str">"idade"</span>], pessoa.endereco.cidade)</code></pre>
+  <div class="callout"><strong>Coleções são valores.</strong> <code>adicionar</code>, <code>remover</code> e <code>mapa_definir</code> retornam a coleção alterada. Atribua o resultado: <code>lista = adicionar(lista, item)</code>.</div>
+</section>
+
+<section class="chapter" id="erros" data-keywords="tentar capturar finalmente lançar erro tipado pilha">
+  <h2><i>07.</i> Tratamento de erros</h2>
+  <pre><code><span class="kw">tentar</span> {
+    <span class="kw">lancar</span> <span class="fn">Erro</span>(<span class="str">"RegraNegocio"</span>, <span class="str">"Operação inválida"</span>)
+} <span class="kw">capturar</span> (erro) {
+    <span class="fn">imprimir</span>(<span class="fn">tipo_erro</span>(erro), <span class="fn">mensagem_erro</span>(erro))
+} <span class="kw">finalmente</span> {
+    <span class="fn">imprimir</span>(<span class="str">"Fim"</span>)
+}</code></pre>
+  <p><code>lancar</code> aceita texto ou <code>Erro</code>. Consulte <code>pilha_erro(erro)</code>. É permitido usar apenas <code>capturar</code>, apenas <code>finalmente</code> ou ambos.</p>
+</section>
+
+<section class="chapter" id="modulos" data-keywords="módulo importar incluir requerer pacote namespace">
+  <h2><i>08.</i> Módulos e inclusão</h2>
+  <div class="grid">
+    <div class="card"><h3>Importar</h3><pre><code><span class="kw">importar</span> <span class="str">"util.pep"</span>
+<span class="kw">importar</span> <span class="str">"math.pep"</span> <span class="kw">como</span> math
+<span class="fn">imprimir</span>(math.dobro(<span class="num">5</span>))</code></pre><p>Sem alias, símbolos públicos entram no ambiente. Com alias, ficam em um namespace.</p></div>
+    <div class="card"><h3>Incluir</h3><pre><code><span class="kw">incluir</span> <span class="str">"cabecalho.phtml"</span>
+<span class="kw">requerer</span> <span class="str">"config.pep"</span></code></pre><p><code>incluir</code> tolera ausência e executa cada arquivo apenas uma vez; <code>requerer</code> falha se ausente.</p></div>
+  </div>
+  <p>Caminhos relativos partem do arquivo atual. Pacotes ficam em <code>pep_modules/nome/mod.pep</code> e podem ser importados por nome. Símbolos iniciados por <code>_</code> não são exportados.</p>
+</section>
+
+<section class="chapter" id="arquivos" data-keywords="arquivo json csv regex hash base64 data planilha tabela">
+  <h2><i>09.</i> Arquivos, JSON, CSV e texto avançado</h2>
+  <div class="grid">
+    <div class="card"><h3>Arquivo e JSON</h3><pre><code><span class="kw">var</span> dados = {nome: <span class="str">"PEP"</span>, versao: <span class="num">0.6</span>}
+<span class="fn">escrever_arquivo</span>(<span class="str">"dados.json"</span>, <span class="fn">json_serializar</span>(dados))
+<span class="kw">var</span> lido = <span class="fn">json_deserializar</span>(
+    <span class="fn">ler_arquivo</span>(<span class="str">"dados.json"</span>))</code></pre></div>
+    <div class="card"><h3>Regex</h3><pre><code><span class="kw">var</span> emails = <span class="fn">regex_combinar_tudo</span>(
+    <span class="str">"[\\w.-]+@[\\w.-]+"</span>, texto)
+<span class="kw">var</span> limpo = <span class="fn">regex_substituir</span>(
+    <span class="str">"\\s+"</span>, <span class="str">" "</span>, texto)</code></pre></div>
+  </div>
+  <h3>CSV</h3>
+  <div class="grid">
+    <div class="card"><h4>Leitura</h4><pre><code><span class="com"># cada linha retorna uma lista de textos</span>
+<span class="kw">var</span> linhas = <span class="fn">csv_ler</span>(<span class="str">"vendas.csv"</span>)
+<span class="com"># primeira linha vira chaves do mapa</span>
+<span class="kw">var</span> tabela = <span class="fn">csv_ler_mapa</span>(<span class="str">"pessoas.csv"</span>)
+<span class="fn">imprimir</span>(tabela[<span class="num">0</span>].nome, tabela[<span class="num">0</span>].idade)</code></pre></div>
+    <div class="card"><h4>Escrita e serialização</h4><pre><code><span class="kw">var</span> dados = [[<span class="str">"nome"</span>,<span class="str">"preco"</span>],[<span class="str">"Livro"</span>,<span class="num">39.9</span>]]
+<span class="fn">csv_escrever</span>(<span class="str">"saida.csv"</span>, dados)
+<span class="com"># parsear/serializar em memória</span>
+<span class="kw">var</span> parsed = <span class="fn">csv_parsear</span>(<span class="str">"a,b\n1,2"</span>)
+<span class="kw">var</span> texto  = <span class="fn">csv_serializar</span>(dados)</code></pre></div>
+  </div>
+  <p>O parser CSV suporta aspas, escapes <code>""</code>, vírgulas dentro de campos e BOM UTF-8. Sem dependência externa.</p>
+  <p>Também há <code>sha256</code>, <code>md5</code>, <code>hmac_sha256</code>, Base64, datas e formatação. Não use hashes rápidos isolados para armazenar senhas.</p>
+</section>
+
+<section class="chapter" id="web" data-keywords="servidor http web template phtml rota sessão cookie csrf get post fastcgi">
+  <h2><i>10.</i> Web, templates e rotas</h2>
+  <p>Arquivos <code>.phtml</code> misturam HTML e PEP. <code>&lt;?pep ... ?&gt;</code> executa código; <code>&lt;?= expressão ?&gt;</code> escreve com escape HTML automático.</p>
+  <pre><code><span class="kw">&lt;?pep</span>
+<span class="kw">var</span> produtos = [{nome: <span class="str">"Livro"</span>, preco: <span class="num">39.9</span>}]
+<span class="kw">?&gt;</span>
+&lt;ul&gt;
+<span class="kw">&lt;?pep para</span> produto <span class="kw">em</span> produtos { <span class="kw">?&gt;</span>
+  &lt;li&gt;<span class="kw">&lt;?=</span> produto.nome <span class="kw">?&gt;</span> — R$ <span class="kw">&lt;?=</span> produto.preco <span class="kw">?&gt;</span>&lt;/li&gt;
+<span class="kw">&lt;?pep</span> } <span class="kw">?&gt;</span>
+&lt;/ul&gt;</code></pre>
+  <pre><code>pep servir <span class="num">7878</span> site
+<span class="com"># http://localhost:7878</span></code></pre>
+  <h3>Roteamento por arquivos</h3>
+  <p>A pasta informada ao comando funciona como raiz documental: <code>index.pep</code> atende <code>/</code>, <code>produto.pep</code> atende <code>/produto</code>, <code>produto/index.pep</code> atende <code>/produto</code> e <code>produto/[id].pep</code> atende <code>/produto/42</code>. Arquivos <code>.phtml</code> seguem as mesmas regras. No FastCGI, <code>SCRIPT_FILENAME</code> e <code>DOCUMENT_ROOT</code> do NGINX ou Apache definem a raiz.</p>
+  <h3>Contexto HTTP</h3>
+  <div class="table-wrap"><table><thead><tr><th>Variável</th><th>Conteúdo</th></tr></thead><tbody>
+    <tr><td><code>_GET</code> / <code>_POST</code></td><td>Query string e formulário URL-encoded.</td></tr>
+    <tr><td><code>_CORPO_JSON</code></td><td>JSON decodificado quando o Content-Type é JSON; <code>Nulo</code> caso contrário.</td></tr>
+    <tr><td><code>_CORPO_BRUTO</code></td><td>Corpo original em bytes.</td></tr>
+    <tr><td><code>_ARQUIVOS</code></td><td>Uploads multipart com nome, tipo, tamanho e dados.</td></tr>
+    <tr><td><code>_CABECALHOS</code></td><td>Cabeçalhos normalizados para minúsculas.</td></tr>
+    <tr><td><code>_URL</code> / <code>_METODO</code></td><td>Caminho e método.</td></tr>
+    <tr><td><code>_COOKIE</code> / <code>_SESSAO_ID</code></td><td>Cookies e sessão.</td></tr>
+    <tr><td><code>_PARAMS</code></td><td>Parâmetros capturados por rota.</td></tr>
+  </tbody></table></div>
+  <h3>Rotas em <code>routes.pep</code></h3>
+  <pre><code><span class="kw">funcao</span> <span class="fn">detalhar</span>() {
+    <span class="fn">json_responder</span>({id: _PARAMS.id})
+}
+<span class="fn">rota</span>(<span class="str">"GET"</span>, <span class="str">"/api/itens/:id"</span>, detalhar)</code></pre>
+  <p>O servidor carrega <code>routes.pep</code> ao iniciar, e rotas têm prioridade sobre arquivos. Sessões são mantidas em memória. <code>PEP_SESSAO_TTL</code> define sua duração em minutos (padrão 30).</p>
+</section>
+
+<section class="chapter" id="websocket" data-keywords="websocket ws tempo real chat broadcast conexão frame handshake upgrade">
+  <h2><i>11.</i> WebSocket</h2>
+  <p class="intro">PEP implementa o protocolo WebSocket (RFC 6455) nativamente, sem dependência externa. O servidor detecta o cabeçalho <code>Upgrade: websocket</code> automaticamente e disponibiliza a conexão via funções <code>ws_*</code> na thread do handler.</p>
+  <pre><code><span class="fn">rota</span>(<span class="str">"GET"</span>, <span class="str">"/ws/chat"</span>, <span class="kw">funcao</span>() {
+    <span class="fn">ws_aceitar</span>()                      <span class="com"># handshake HTTP 101</span>
+    <span class="kw">var</span> id = <span class="fn">ws_id</span>()                  <span class="com"># ID único desta conexão</span>
+    <span class="fn">ws_broadcast</span>(<span class="str">"#{id} entrou"</span>)
+    <span class="kw">enquanto</span> <span class="kw">verdadeiro</span> {
+        <span class="kw">var</span> msg = <span class="fn">ws_receber</span>()        <span class="com"># bloqueia até chegar frame</span>
+        <span class="kw">se</span> msg == <span class="kw">nulo</span> { <span class="kw">pare</span> }     <span class="com"># cliente desconectou</span>
+        <span class="fn">ws_broadcast</span>(<span class="str">"#{id}: {msg}"</span>)
+    }
+    <span class="fn">ws_broadcast</span>(<span class="str">"#{id} saiu"</span>)
+})</code></pre>
+  <h3>Envio direto e transmissão</h3>
+  <pre><code><span class="com"># enviar para uma conexão específica</span>
+<span class="fn">ws_enviar_para</span>(id_destino, <span class="str">"mensagem privada"</span>)
+
+<span class="com"># listar todas as conexões ativas</span>
+<span class="kw">var</span> ids = <span class="fn">ws_conexoes</span>()
+<span class="fn">imprimir</span>(<span class="str">"Online: {tamanho(ids)}"</span>)</code></pre>
+  <h3>Referência das funções WebSocket</h3>
+  <div class="table-wrap"><table><thead><tr><th>Função</th><th>Descrição</th></tr></thead><tbody>
+    <tr><td><code>ws_aceitar()</code></td><td>Realiza o handshake; obrigatório antes de qualquer outra chamada WS.</td></tr>
+    <tr><td><code>ws_receber()</code></td><td>Bloqueia e retorna <code>Texto</code>, <code>Bytes</code> ou <code>Nulo</code> (desconexão).</td></tr>
+    <tr><td><code>ws_enviar(msg)</code></td><td>Envia frame de texto para a conexão atual.</td></tr>
+    <tr><td><code>ws_enviar_bytes(bytes)</code></td><td>Envia frame binário para a conexão atual.</td></tr>
+    <tr><td><code>ws_fechar()</code></td><td>Envia frame Close e encerra a conexão.</td></tr>
+    <tr><td><code>ws_id()</code></td><td>Retorna o ID único (Inteiro) da conexão atual.</td></tr>
+    <tr><td><code>ws_conexoes()</code></td><td>Lista de IDs de todas as conexões ativas.</td></tr>
+    <tr><td><code>ws_enviar_para(id, msg)</code></td><td>Envia mensagem para uma conexão específica por ID.</td></tr>
+    <tr><td><code>ws_broadcast(msg)</code></td><td>Envia mensagem para todas as conexões ativas.</td></tr>
+  </tbody></table></div>
+  <div class="callout info">Cada conexão WebSocket roda em sua própria thread. <code>ws_broadcast</code> e <code>ws_enviar_para</code> permitem comunicação cruzada entre conexões sem compartilhamento de estado explícito.</div>
+</section>
+
+<section class="chapter" id="bancos" data-keywords="sqlite mysql banco sql consulta parâmetro">
+  <h2><i>12.</i> Bancos de dados</h2>
+  <div class="grid">
+    <div class="card"><h3>SQLite</h3><pre><code><span class="kw">var</span> db = <span class="fn">sqlite_conectar</span>(<span class="str">"app.db"</span>)
+<span class="fn">sqlite_executar</span>(db,
+  <span class="str">"INSERT INTO pessoas(nome) VALUES (?)"</span>, [<span class="str">"Ana"</span>])
+<span class="kw">var</span> linhas = <span class="fn">sqlite_consultar</span>(db,
+  <span class="str">"SELECT * FROM pessoas WHERE nome = ?"</span>, [<span class="str">"Ana"</span>])
+<span class="fn">sqlite_fechar</span>(db)</code></pre></div>
+    <div class="card"><h3>MySQL</h3><pre><code><span class="kw">var</span> db = <span class="fn">bd_conectar</span>(
+  <span class="str">"mysql://usuario:senha@host/banco"</span>)
+<span class="kw">var</span> linhas = <span class="fn">bd_consultar</span>(db,
+  <span class="str">"SELECT * FROM pessoas WHERE id = ?"</span>, [<span class="num">1</span>])
+<span class="fn">bd_fechar</span>(db)</code></pre></div>
+  </div>
+  <div class="callout info">Use parâmetros <code>?</code>. Concatenar entrada externa em SQL permite injeção.</div>
+</section>
+
+<section class="chapter" id="numerico" data-keywords="vetor matriz tensor álgebra ndarray quantização float16 int8 inteligência artificial">
+  <h2><i>13.</i> Vetores, matrizes e tensores</h2>
+  <pre><code><span class="kw">var</span> a = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>]
+<span class="fn">imprimir</span>(<span class="fn">produto_interno</span>(a, [<span class="num">4</span>, <span class="num">5</span>, <span class="num">6</span>]))
+
+<span class="kw">var</span> m = <span class="fn">mat_de</span>([[<span class="num">1</span>, <span class="num">2</span>], [<span class="num">3</span>, <span class="num">4</span>]])
+<span class="fn">imprimir</span>(<span class="fn">mat_para_lista</span>(<span class="fn">mat_transpor</span>(m)))
+
+<span class="kw">var</span> t = <span class="fn">tensor_de</span>([<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>], [<span class="num">2</span>, <span class="num">2</span>])
+<span class="fn">imprimir</span>(<span class="fn">tensor_shape</span>(<span class="fn">tensor_relu</span>(t)))</code></pre>
+  <p>Vetores usam listas. Matrizes e tensores usam representação interna eficiente com <code>Arc&lt;Vec&lt;f64&gt;&gt;</code> — clone de tensores é O(1). Confira as formas (<code>tensor_shape</code>) antes de combinar tensores.</p>
+  <h3>Quantização</h3>
+  <p>Reduza o uso de memória de pesos de modelos convertendo tensores para formatos compactos:</p>
+  <div class="grid">
+    <div class="card"><h4>int8 assimétrico</h4><pre><code><span class="kw">var</span> t = <span class="fn">tensor_de</span>([<span class="num">0.1</span>, <span class="num">-0.5</span>, <span class="num">0.9</span>], [<span class="num">3</span>])
+<span class="kw">var</span> q = <span class="fn">tensor_quantizar_int8</span>(t)
+<span class="com"># q = {dados:Bytes, escala:Num, zero_ponto:Int, shape:Lista}</span>
+<span class="fn">imprimir</span>(q.escala, q.zero_ponto)
+<span class="kw">var</span> orig = <span class="fn">tensor_dequantizar_int8</span>(q)</code></pre></div>
+    <div class="card"><h4>float16</h4><pre><code><span class="kw">var</span> qf = <span class="fn">tensor_quantizar_f16</span>(t)
+<span class="com"># qf = {dados:Bytes (2 bytes/elem LE), shape:Lista}</span>
+<span class="kw">var</span> orig = <span class="fn">tensor_dequantizar_f16</span>(qf)</code></pre>
+<p>Escala int8 assimétrica: <code>scale=(max−min)/255</code>. F16: 2 bytes por elemento, little-endian. Sem dependência externa.</p></div>
+  </div>
+</section>
+
+<section class="chapter" id="bytes" data-keywords="bytes binário mmap memória modelo pesos">
+  <h2><i>14.</i> Bytes, modelos e mmap</h2>
+  <pre><code><span class="kw">var</span> bytes = <span class="fn">bytes_de_texto</span>(<span class="str">"Olá"</span>)
+<span class="fn">imprimir</span>(<span class="fn">bytes_tamanho</span>(bytes), <span class="fn">bytes_para_hex</span>(bytes))
+
+<span class="kw">var</span> id = <span class="fn">mmap_abrir</span>(<span class="str">"pesos.f32"</span>)
+<span class="kw">var</span> pesos = <span class="fn">mmap_tensor_f32</span>(id, <span class="num">0</span>, <span class="num">100</span>, <span class="num">64</span>)
+<span class="fn">mmap_fechar</span>(id)</code></pre>
+  <p>O deslocamento de <code>mmap</code> é em bytes. Feche o identificador quando terminar — use <code>finalmente</code> para garantir. Modelos globais podem ser mantidos entre requisições com <code>modelo_carregar</code> e recuperados com <code>modelo_obter</code>.</p>
+</section>
+
+<section class="chapter" id="ia" data-keywords="ia autodiff gradiente retropropagação treinamento aprendizado máquina rede neural backprop">
+  <h2><i>15.</i> IA e autodiff</h2>
+  <p class="intro">PEP inclui um motor de diferenciação automática reversa (backpropagation). Crie tensores-folha com <code>grad_tensor</code>, execute operações rastreadas e chame <code>grad_retropropagar</code> na perda para acumular gradientes em todas as variáveis.</p>
+  <div class="grid">
+    <div class="card"><h3>Gradiente simples</h3><pre><code><span class="com"># y = x² → dy/dx = 2x; em x=3 deve dar 6</span>
+<span class="fn">grad_ativar</span>()
+<span class="kw">var</span> x = <span class="fn">grad_tensor</span>([<span class="num">3.0</span>], [<span class="num">1</span>])
+<span class="kw">var</span> y = <span class="fn">grad_mul</span>(x, x)
+<span class="kw">var</span> loss = <span class="fn">grad_soma_total</span>(y)
+<span class="fn">grad_retropropagar</span>(loss)
+<span class="fn">imprimir</span>(<span class="fn">grad_de</span>(x))   <span class="com"># [6.0]</span>
+<span class="fn">grad_limpar</span>()</code></pre></div>
+    <div class="card"><h3>Camada linear</h3><pre><code><span class="com"># y = relu(W·x) — forward + backward</span>
+<span class="fn">grad_ativar</span>()
+<span class="kw">var</span> W = <span class="fn">grad_tensor</span>([<span class="num">0.5</span>,<span class="num">-1.0</span>,<span class="num">0.3</span>,<span class="num">0.8</span>],[<span class="num">2</span>,<span class="num">2</span>])
+<span class="kw">var</span> x = <span class="fn">grad_tensor</span>([<span class="num">1.0</span>,<span class="num">2.0</span>],[<span class="num">2</span>,<span class="num">1</span>])
+<span class="kw">var</span> y = <span class="fn">grad_relu</span>(<span class="fn">grad_matmul</span>(W, x))
+<span class="kw">var</span> loss = <span class="fn">grad_soma_total</span>(y)
+<span class="fn">grad_retropropagar</span>(loss)
+<span class="fn">imprimir</span>(<span class="fn">grad_de</span>(W))
+<span class="fn">grad_limpar</span>()</code></pre></div>
+  </div>
+  <h3>Referência das funções de gradiente</h3>
+  <div class="table-wrap"><table><thead><tr><th>Função</th><th>Descrição</th></tr></thead><tbody>
+    <tr><td><code>grad_ativar()</code> / <code>grad_desativar()</code></td><td>Liga/desliga rastreamento de operações na fita.</td></tr>
+    <tr><td><code>grad_limpar()</code></td><td>Descarta a fita de operações. Chame após cada iteração.</td></tr>
+    <tr><td><code>grad_zerar_todos()</code></td><td>Zera gradientes acumulados de todos os tensores-folha.</td></tr>
+    <tr><td><code>grad_tensor(dados, shape)</code></td><td>Cria tensor-folha rastreável (nó do grafo de computação).</td></tr>
+    <tr><td><code>grad_soma</code> · <code>grad_sub</code> · <code>grad_mul</code> · <code>grad_matmul</code></td><td>Operações binárias com rastreamento na fita.</td></tr>
+    <tr><td><code>grad_relu</code> · <code>grad_sigmoid</code> · <code>grad_tanh</code> · <code>grad_exp</code> · <code>grad_log</code> · <code>grad_neg</code></td><td>Ativações unárias com rastreamento.</td></tr>
+    <tr><td><code>grad_soma_total(t)</code></td><td>Redução diferenciável para escalar — ponto de partida do backward.</td></tr>
+    <tr><td><code>grad_escalar_mul(t, n)</code></td><td>Multiplica tensor por escalar com grad rastreado.</td></tr>
+    <tr><td><code>grad_retropropagar(loss)</code></td><td>Percorre a fita ao contrário e acumula gradientes.</td></tr>
+    <tr><td><code>grad_de(t)</code></td><td>Retorna tensor com os gradientes acumulados de <code>t</code>.</td></tr>
+    <tr><td><code>grad_dados(t)</code></td><td>Retorna os valores forward de <code>t</code> sem ID de gradiente.</td></tr>
+  </tbody></table></div>
+  <div class="callout info">Chame <code>grad_limpar()</code> após cada iteração de treinamento para liberar a fita e evitar acúmulo incorreto de gradientes entre passos.</div>
+  <div class="callout"><strong>GPU (opcional):</strong> Compile com <code>--features gpu-cuda</code> (NVIDIA) ou <code>--features gpu-metal</code> (Apple Silicon). Use <code>tensor_para_gpu(t)</code>, <code>tensor_para_metal(t)</code> e <code>tensor_para_cpu(t)</code> para mover tensores entre dispositivos. <code>tensor_dispositivo(t)</code> retorna <code>"cpu"</code>, <code>"cuda:0"</code> ou <code>"metal"</code>.</div>
+</section>
+
+<section class="chapter" id="referencia" data-keywords="api referência funções nativas biblioteca assinatura">
+  <h2><i>16.</i> Referência de funções nativas</h2>
+  <p class="intro"><code>?</code> indica argumento opcional. Operações agrupadas por barra mantêm o mesmo formato.</p>
+  <div class="api">
+    <div class="card"><h4>E/S e conversão</h4><div class="sig"><code>imprimir(...v)</code> · <code>escrever(...v)</code> · <code>nova_linha()</code> · <code>entrada(prompt?)</code><br><code>tipo(v)</code> · <code>texto(v)</code> · <code>numero(v)</code> · <code>inteiro(v)</code> · <code>booleano(v)</code> · <code>truncar(n)</code></div></div>
+    <div class="card"><h4>Listas</h4><div class="sig"><code>tamanho(v)</code> · <code>adicionar(l,v)</code> · <code>remover(l,i)</code> · <code>intervalo(inicio?,fim,passo?)</code> · <code>ordenar(l)</code> · <code>inverter_lista(l)</code> · <code>contem(l,v)</code> · <code>indice_de(l,v)</code> · <code>fatiar(l,i,f)</code> · <code>mapear(l,fn)</code> · <code>filtrar(l,fn)</code> · <code>reduzir(l,fn,inicial?)</code></div></div>
+    <div class="card"><h4>Mapas</h4><div class="sig"><code>mapa()</code> · <code>mapa_definir(m,k,v)</code> · <code>mapa_obter(m,k)</code> · <code>mapa_tem(m,k)</code> · <code>mapa_remover(m,k)</code> · <code>mapa_chaves(m)</code> · <code>mapa_valores(m)</code> · <code>mapa_para_lista(m)</code> · <code>obter(m,k,padrao?)</code></div></div>
+    <div class="card"><h4>Texto</h4><div class="sig"><code>maiusculas</code> · <code>minusculas</code> · <code>aparar</code> · <code>aparar_esquerda/direita</code> · <code>substituir</code> · <code>dividir</code> · <code>juntar</code> · <code>comeca_com</code> · <code>termina_com</code> · <code>contem_texto</code> · <code>posicao</code> · <code>sub_texto</code> · <code>inverter_texto</code> · <code>repetir</code> · <code>html_escapar</code> · <code>url_codificar</code> · <code>url_decodificar_texto</code></div></div>
+    <div class="card"><h4>Matemática e data</h4><div class="sig"><code>raiz</code> · <code>potencia</code> · <code>absoluto</code> · <code>arredondar</code> · <code>piso</code> · <code>teto</code> · <code>minimo</code> · <code>maximo</code> · <code>aleatorio</code> · <code>aleatorio_inteiro</code> · <code>seno</code> · <code>cosseno</code> · <code>tangente</code> · <code>logaritmo</code> · <code>pi</code> · <code>infinito</code> · <code>eh_numero</code><br><code>data_hora</code> · <code>timestamp</code> · <code>dormir</code> · <code>formatar_numero</code> · <code>formatar_data</code></div></div>
+    <div class="card"><h4>Arquivos e JSON</h4><div class="sig"><code>ler_arquivo</code> · <code>escrever_arquivo</code> · <code>escrever_arquivo_bytes</code> · <code>acrescentar_arquivo</code> · <code>arquivo_existe</code> · <code>apagar_arquivo</code> · <code>listar_arquivos</code> · <code>criar_diretorio</code> · <code>eh_arquivo</code> · <code>eh_diretorio</code> · <code>json_serializar</code> · <code>json_deserializar</code></div></div>
+    <div class="card"><h4>CSV</h4><div class="sig"><code>csv_ler(caminho)</code> · <code>csv_ler_mapa(caminho)</code> · <code>csv_escrever(caminho, dados)</code> · <code>csv_parsear(texto)</code> · <code>csv_serializar(dados)</code></div></div>
+    <div class="card"><h4>Regex, formato e hash</h4><div class="sig"><code>capturar_saida(fn)</code> · <code>formatar(padrao,mapa)</code> · <code>regex_combinar</code> · <code>regex_combinar_tudo</code> · <code>regex_substituir</code> · <code>regex_dividir</code> · <code>base64_codificar/decodificar</code> · <code>sha256</code> · <code>md5</code> · <code>hmac_sha256</code></div></div>
+    <div class="card"><h4>Web e sessão</h4><div class="sig"><code>rota</code> · <code>cabecalho</code> · <code>status</code> · <code>redirecionar</code> · <code>json_responder</code> · <code>entrada_get/post</code> · <code>obter_url</code> · <code>postar_url</code> · <code>corpo_bruto</code><br><code>sessao_iniciar/obter/definir/remover/destruir/renovar/regenerar</code> · <code>sessao_listar_chaves</code> · <code>sessao_obter_tudo</code> · <code>csrf_token</code> · <code>csrf_verificar</code> · <code>cookie_obter/definir</code></div></div>
+    <div class="card"><h4>WebSocket</h4><div class="sig"><code>ws_aceitar()</code> · <code>ws_receber()</code> · <code>ws_enviar(msg)</code> · <code>ws_enviar_bytes(bytes)</code> · <code>ws_fechar()</code> · <code>ws_id()</code> · <code>ws_conexoes()</code> · <code>ws_enviar_para(id, msg)</code> · <code>ws_broadcast(msg)</code></div></div>
+    <div class="card"><h4>Bancos</h4><div class="sig"><code>sqlite_conectar</code> · <code>sqlite_consultar</code> · <code>sqlite_executar</code> · <code>sqlite_fechar</code><br><code>bd_conectar</code> · <code>bd_consultar</code> · <code>bd_executar</code> · <code>bd_fechar</code></div></div>
+    <div class="card"><h4>Vetores e matrizes</h4><div class="sig"><code>vec_soma/sub/mul/div</code> · <code>produto_interno</code> · <code>norma</code> · <code>normalizar</code> · <code>produto_vetorial</code><br><code>matriz</code> · <code>mat_de</code> · <code>mat_obter/definir</code> · <code>mat_soma/sub/mul</code> · <code>mat_transpor</code> · <code>mat_identidade</code> · <code>mat_linhas/colunas</code> · <code>mat_para_lista</code></div></div>
+    <div class="card"><h4>Tensores</h4><div class="sig"><code>tensor</code> · <code>tensor_de</code> · <code>tensor_zeros/uns</code> · <code>tensor_shape/ndim/tamanho</code> · <code>tensor_reshape/transpor/para_lista</code> · <code>tensor_soma/sub/mul/div</code> · <code>tensor_potencia/neg/exp/log/raiz/relu/sigmoid/tanh/softmax</code> · <code>tensor_media/soma_total/max/min</code> · <code>tensor_soma_eixo/media_eixo/max_eixo/min_eixo</code> · <code>tensor_concatenar/empilhar</code> · <code>tensor_matmul</code><br><code>tensor_quantizar_int8/f16</code> · <code>tensor_dequantizar_int8/f16</code><br><code>tensor_dispositivo</code> · <code>tensor_para_gpu/metal/cpu</code></div></div>
+    <div class="card"><h4>Bytes, mmap e modelos</h4><div class="sig"><code>bytes_de_texto/para_texto</code> · <code>bytes_tamanho/fatia/obter</code> · <code>bytes_de_lista/para_lista</code> · <code>bytes_base64</code> · <code>bytes_para_hex</code> · <code>bytes_concatenar</code><br><code>mmap_abrir/fechar/tamanho</code> · <code>mmap_ler_f32/f64/bytes</code> · <code>mmap_tensor_f32/f64</code><br><code>modelo_carregar/obter/existe/listar/descarregar</code></div></div>
+    <div class="card"><h4>Gradientes (autodiff)</h4><div class="sig"><code>grad_ativar/desativar</code> · <code>grad_limpar/zerar_todos</code> · <code>grad_tensor(dados, shape)</code><br><code>grad_soma/sub/mul/matmul</code> · <code>grad_relu/sigmoid/tanh/exp/log/neg</code><br><code>grad_soma_total(t)</code> · <code>grad_escalar_mul(t, n)</code> · <code>grad_retropropagar(loss)</code> · <code>grad_de(t)</code> · <code>grad_dados(t)</code></div></div>
+    <div class="card"><h4>Erros</h4><div class="sig"><code>Erro(mensagem)</code> · <code>Erro(tipo, mensagem)</code> · <code>tipo_erro(e)</code> · <code>mensagem_erro(e)</code> · <code>pilha_erro(e)</code></div></div>
+  </div>
+</section>
+
+<section class="chapter" id="cli" data-keywords="terminal comando check formatar doc servir fastcgi vm repl">
+  <h2><i>17.</i> Linha de comando</h2>
+  <div class="table-wrap"><table><thead><tr><th>Comando</th><th>Função</th></tr></thead><tbody>
+    <tr><td><code>pep</code></td><td>REPL interativo.</td></tr>
+    <tr><td><code>pep arquivo.pep</code></td><td>Executa programa.</td></tr>
+    <tr><td><code>pep pagina.phtml</code></td><td>Processa template.</td></tr>
+    <tr><td><code>pep --check arquivo</code></td><td>Verifica sintaxe sem executar.</td></tr>
+    <tr><td><code>pep formatar arquivo.pep</code></td><td>Formata o arquivo no lugar.</td></tr>
+    <tr><td><code>pep doc arquivo.pep</code></td><td>Gera Markdown das funções declaradas.</td></tr>
+    <tr><td><code>pep servir [porta] [dir]</code></td><td>Servidor HTTP; padrão porta 7878.</td></tr>
+    <tr><td><code>pep fastcgi &lt;script.pep|dir&gt; [porta]</code></td><td>Servidor FastCGI; padrão 127.0.0.1:9000.</td></tr>
+    <tr><td><code>pep --vm arquivo.pep</code></td><td>Executa pela VM de bytecode.</td></tr>
+    <tr><td><code>pep --versao</code></td><td>Exibe a versão.</td></tr>
+  </tbody></table></div>
+</section>
+
+<section class="chapter" id="praticas" data-keywords="boas práticas estilo segurança validar recursos">
+  <h2><i>18.</i> Boas práticas</h2>
+  <div class="grid">
+    <div class="card"><h3>Nomes claros</h3><p>Prefira <code>total_pedido</code> a abreviações. Divida regras em funções pequenas.</p></div>
+    <div class="card"><h3>Verifique antes</h3><p>Use <code>pep --check</code> em automações e <code>pep formatar</code> para consistência.</p></div>
+    <div class="card"><h3>Valide entradas</h3><p>Use <code>tipo</code>/<code>eh_numero</code>, escape HTML e sempre parametrize SQL com <code>?</code>.</p></div>
+    <div class="card"><h3>Libere recursos</h3><p>Feche bancos, mapeamentos e conexões em <code>finalmente</code>, inclusive após falhas.</p></div>
+    <div class="card"><h3>Autodiff</h3><p>Chame <code>grad_limpar()</code> após cada passo de treinamento. Não acumule a fita entre iterações.</p></div>
+    <div class="card"><h3>WebSocket</h3><p>Trate o retorno <code>nulo</code> de <code>ws_receber()</code> para detectar desconexões e encerrar o loop.</p></div>
+  </div>
+  <div class="callout info"><strong>Continue praticando:</strong> a pasta <code>exemplos/</code> cobre programas básicos, templates, módulos, bancos, lambdas, tensores, bytes, mmap e o scaffold completo em <code>exemplos/nginx-pep/</code>.</div>
+</section>
+
+</div>
+<footer class="footer">PEP v0.6.0 · documentação derivada do lexer, parser, interpretador e exemplos do projeto.</footer>
+</main>
+</div>
+<script>
+document.querySelectorAll("pre").forEach(pre=>{const b=document.createElement("button");b.className="copy";b.textContent="Copiar";b.onclick=async()=>{await navigator.clipboard.writeText(pre.querySelector("code").innerText);b.textContent="Copiado!";setTimeout(()=>b.textContent="Copiar",1200)};pre.appendChild(b)});
+const aside=document.querySelector("aside"),menu=document.querySelector(".menu");menu.onclick=()=>{aside.classList.toggle("open");menu.textContent=aside.classList.contains("open")?"×":"☰"};document.querySelectorAll("nav a").forEach(a=>a.onclick=()=>{aside.classList.remove("open");menu.textContent="☰"});
+const sections=[...document.querySelectorAll(".chapter")],links=[...document.querySelectorAll("nav a")];const obs=new IntersectionObserver(es=>es.filter(e=>e.isIntersecting).forEach(e=>links.forEach(a=>a.classList.toggle("active",a.hash==="#"+e.target.id))),{rootMargin:"-20% 0px -70%"});sections.forEach(s=>obs.observe(s));
+document.querySelector("#search").oninput=e=>{const q=e.target.value.toLocaleLowerCase("pt-BR").trim();sections.forEach(s=>s.classList.toggle("hidden",q&&!((s.textContent+" "+(s.dataset.keywords||"")).toLocaleLowerCase("pt-BR").includes(q))))};
+</script>
+</body>
+</html>
