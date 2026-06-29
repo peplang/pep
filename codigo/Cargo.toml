@@ -1,0 +1,46 @@
+[package]
+name = "pep"
+version = "0.6.0"
+edition = "2021"
+description = "PEP - Programar em Portugues: uma linguagem de programacao interpretada escrita em Rust"
+
+[[bin]]
+name = "pep"
+path = "src/main.rs"
+
+[features]
+experimental-vm = []
+# Aceleração GPU via candle (CPU por padrão; ative "cuda" para NVIDIA ou "metal" para Apple Silicon)
+gpu = ["candle-core"]
+gpu-cuda = ["candle-core", "candle-core/cuda"]
+gpu-metal = ["candle-core", "candle-core/metal"]
+# Inferência local com GGUF/llama.cpp
+gguf = ["llama-cpp-2"]
+
+[build-dependencies]
+winresource = "0.1"
+
+[dependencies]
+mysql = "25"
+rusqlite = { version = "0.37.0", features = ["bundled"] }
+rustyline = "18.0.1"
+ureq = { version = "3.3.0", features = ["json"] }
+regex = "1"
+base64 = "0.22"
+sha2 = "0.10"
+sha1 = "0.10"
+hmac = "0.12"
+hex = "0.4"
+ndarray = "0.15"
+memmap2 = "0.9"
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "gif", "bmp"] }
+getrandom = "0.4.3"
+# Aceleração GPU (opcional — ative com --features gpu)
+candle-core = { version = "0.8", optional = true }
+# Inferência GGUF/llama.cpp (opcional — ative com --features gguf)
+llama-cpp-2 = { version = "0.1", optional = true }
+lopdf = { version = "0.41.0", default-features = false }
+lsp-server = "0.7.9"
+lsp-types = "0.97.0"
+serde_json = "1.0.150"
+libloading = "0.9.0"
